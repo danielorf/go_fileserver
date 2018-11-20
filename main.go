@@ -3,6 +3,7 @@ package main
 import "io/ioutil"
 import "log"
 import "net/http"
+import "os"
 
 type viewHandler struct{}
 
@@ -32,7 +33,8 @@ func (vh *viewHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// println(os.Getenv("FSDirectory"))
 	// http.Handle("/", new(viewHandler))
-	http.Handle("/", http.FileServer(http.Dir(".")))
+	http.Handle("/", http.FileServer(http.Dir(os.Getenv("FSDirectory"))))
 	http.ListenAndServe(":8080", nil)
 }
